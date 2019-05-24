@@ -2,6 +2,8 @@ package com.mcmacker4.krater.server
 
 import com.mcmacker4.krater.Headers
 import com.mcmacker4.krater.Request
+import com.mcmacker4.krater.server.exceptions.BadRequestException
+import com.mcmacker4.krater.server.exceptions.InvalidRequestMethodException
 import java.io.BufferedReader
 import java.lang.Exception
 
@@ -12,6 +14,12 @@ class RequestParser {
         try {
             
             val requestLine = reader.readLine().split(" ").map { it.trim() }
+            
+            val method = try {
+                RequestMethod.valueOf(requestLine[0])
+            } catch (ex: IllegalArgumentException) {
+                throw InvalidRequestMethodException(requestLine[0], ex)
+            }
             
             val headers = Headers()
             var line = reader.readLine()
@@ -28,10 +36,10 @@ class RequestParser {
                 String(buffer)
             } else null
     
-            return Request(requestLine[0], requestLine[1], requestLine[2], headers, body)
+            return Request(method, requestLine[1], requestLine[2], headers, body)
             
         } catch(ex: Exception) {
-            throw Exception("Error parsing request.", ex)
+            throw BadRequestException("Error parsing request.", ex)
         }
     }
 

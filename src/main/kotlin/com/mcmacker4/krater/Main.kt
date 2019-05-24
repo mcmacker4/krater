@@ -9,12 +9,8 @@ fun main() {
         router {
 
             get("/") { req ->
-                contentType("application/json")
-                body = """
-                    {
-                        "message": "${req.body}"
-                    }
-                """.trimIndent()
+                contentType(req.contentType() ?: "text/plain")
+                body = req.body
             }
 
         }

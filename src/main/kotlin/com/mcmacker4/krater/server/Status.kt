@@ -5,6 +5,7 @@ enum class Status(val code: Int, val string: String) {
     Continue(100, "Continue"),
     SwitchingProtocols(101, "Switching Protocols"),
     Processing(102, "Processing"),
+    
     OK(200, "OK"),
     Created(201, "Created"),
     Accepted(202, "Accepted"),
@@ -15,6 +16,7 @@ enum class Status(val code: Int, val string: String) {
     MultiStatus(207, "Multi-Status"),
     AlreadyReported(208, "Already Reported"),
     IMUsed(226, "IM Used"),
+    
     MultipleChoices(300, "Multiple Choices"),
     MovedPermanently(301, "Moved Permanently"),
     Found(302, "Found"),
@@ -23,6 +25,7 @@ enum class Status(val code: Int, val string: String) {
     UseProxy(305, "Use Proxy"),
     TemporaryRedirect(307, "Temporary Redirect"),
     PermanentRedirect(308, "Permanent Redirect"),
+    
     BadRequest(400, "Bad Request"),
     Unauthorized(401, "Unauthorized"),
     PaymentRequired(402, "Payment Required"),
@@ -53,6 +56,7 @@ enum class Status(val code: Int, val string: String) {
     ConnectionClosedWithoutResponse(444, "Connection Closed Without Response"),
     UnavailableForLegalReasons(451, "Unavailable For Legal Reasons"),
     ClientClosedRequest(499, "Client Closed Request"),
+    
     InternalServerError(500, "Internal Server Error"),
     NotImplemented(501, "Not Implemented"),
     BadGateway(502, "Bad Gateway"),

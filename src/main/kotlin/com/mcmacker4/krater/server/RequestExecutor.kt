@@ -2,6 +2,7 @@ package com.mcmacker4.krater.server
 
 import com.mcmacker4.krater.Application
 import com.mcmacker4.krater.Response
+import com.mcmacker4.krater.server.exceptions.BadRequestException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.Exception
@@ -24,18 +25,19 @@ class RequestExecutor(
             val response = app.handleRequest(request)
             println("${request.path} -> ${response.status.string}")
             response.write(ostream.writer())
+        } catch (ex: BadRequestException) {
+            respondError(Status.BadRequest, ex.message)
         } catch (ex: Exception) {
-            internalServerError(ex)
-            ex.printStackTrace()
+            respondError(Status.InternalServerError, ex.message)
         } finally {
             socket.close()
         }
     }
     
-    private fun internalServerError(ex: Exception) {
+    private fun respondError(status: Status, body: Any?) {
         Response().apply {
-            status = Status.InternalServerError
-            headers["Message"] = ex.message!!
+            this.status = status
+            this.body = body
         }.write(ostream.writer())
     }
 
