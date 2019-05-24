@@ -22,18 +22,20 @@ class RequestExecutor(
         try {
             val request = parser.parseRequest(istream.reader())
             val response = app.handleRequest(request)
-            println("${request.path} -> ${response.status}")
+            println("${request.path} -> ${response.status.string}")
             response.write(ostream.writer())
-            socket.close()
         } catch (ex: Exception) {
             internalServerError(ex)
             ex.printStackTrace()
+        } finally {
+            socket.close()
         }
     }
     
     private fun internalServerError(ex: Exception) {
         Response().apply {
-            status = 500
+            status = Status.InternalServerError
+            headers["Message"] = ex.message!!
         }.write(ostream.writer())
     }
 

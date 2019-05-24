@@ -9,8 +9,12 @@ fun main() {
         router {
 
             get("/") {
-                body = "<h1>Hello World!</h1>"
-                headers["Content-Type"] = "text/html"
+                contentType("application/json")
+                body = """
+                    {
+                        "message": "Hello World"
+                    }
+                """.trimIndent()
             }
 
         }
