@@ -6,5 +6,5 @@ class Request(
     val path: String,
     val version: String,
     val headers: Headers,
-    val body: String
+    val body: String?
 )

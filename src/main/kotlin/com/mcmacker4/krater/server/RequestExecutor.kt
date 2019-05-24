@@ -20,7 +20,7 @@ class RequestExecutor(
 
     override fun run() {
         try {
-            val request = parser.parseRequest(istream.reader())
+            val request = parser.parseRequest(istream.bufferedReader())
             val response = app.handleRequest(request)
             println("${request.path} -> ${response.status.string}")
             response.write(ostream.writer())

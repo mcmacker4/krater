@@ -8,11 +8,11 @@ fun main() {
         
         router {
 
-            get("/") {
+            get("/") { req ->
                 contentType("application/json")
                 body = """
                     {
-                        "message": "Hello World"
+                        "message": "${req.body}"
                     }
                 """.trimIndent()
             }

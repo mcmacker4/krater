@@ -9,3 +9,10 @@ GET http://localhost:8080/
 Cookie: alpha=1234; beta=abcd
 
 ###
+
+POST http://localhost:8080/
+Cookie: alpha=1234; beta=abcd
+
+this is a request body
+
+###
