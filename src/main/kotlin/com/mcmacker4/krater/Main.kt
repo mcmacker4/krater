@@ -5,14 +5,14 @@ import com.mcmacker4.krater.server.Server
 fun main() {
 
     val app = Application {
+        
+        router {
 
-        route("/") {
-            body = "Hello World!"
-            headers["Content-Type"] = "text/html"
-        }
+            get("/") {
+                body = "<h1>Hello World!</h1>"
+                headers["Content-Type"] = "text/html"
+            }
 
-        route("/es") {
-            redirect("/")
         }
 
     }
