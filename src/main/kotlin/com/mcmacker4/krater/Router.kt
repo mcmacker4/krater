@@ -1,14 +1,26 @@
 package com.mcmacker4.krater
 
+import com.mcmacker4.krater.server.RequestMethod
+
 
 data class Endpoint(val path: String, val method: RequestMethod, val handler: RequestHandler)
 
 
-class Router(block: Builder.() -> Unit) {
-    
+class Router(val host: String, block: Builder.() -> Unit) {
+
     val routes = arrayListOf<Endpoint>()
     
     init { Builder(this).apply(block) }
+    
+    fun handleRequest(request: Request) : Response? {
+        val endpoint = routes.firstOrNull { it.method == request.method && it.path == request.path }
+        if (endpoint != null) {
+            val response = Response()
+            endpoint.handler(response, request)
+            return response
+        }
+        return null
+    }
 
     class Builder(private val router: Router) {
         

@@ -8,21 +8,17 @@ class Application(builder: Builder.() -> Unit) {
     init { Builder(this).apply(builder) }
 
 
-    fun handleRequest(request: Request) : Response {
-        val router = routers[0]
-        val route = router.routes[0]
-        
-        val response = Response()
-        route.handler(response, request)
-        
-        return response
+    fun handleRequest(request: Request) : Response? {
+        val host = request.host()
+        val router = routers.find { it.host == host }
+        return router?.handleRequest(request)
     }
     
     
     class Builder(private val app: Application) {
 
-        fun router(block: Router.Builder.() -> Unit) {
-            app.routers.add(Router(block))
+        fun router(host: String = "*", block: Router.Builder.() -> Unit) {
+            app.routers.add(Router(host, block))
         }
 
     }

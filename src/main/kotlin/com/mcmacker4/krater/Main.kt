@@ -6,11 +6,11 @@ fun main() {
 
     val app = Application {
         
-        router {
+        router("localhost") {
 
-            get("/") { req ->
-                contentType(req.contentType() ?: "text/plain")
-                body = req.body
+            get("/") {
+                contentType("text/html")
+                body = "<h1>Hello World</h1>"
             }
 
         }
