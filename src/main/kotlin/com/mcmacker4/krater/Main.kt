@@ -14,6 +14,17 @@ fun main() {
                 body = "<h1>Hello $name</h1>"
             }
 
+            get("/query") { req ->
+                contentType("application/json")
+
+                body = "{\n" + (
+                        req.query?.map { pair ->
+                            "\t\"${pair.key}\": \"${pair.value}\""
+                        }?.joinToString(",\n") ?: ""
+                ) + "\n}"
+
+            }
+
         }
 
         router("192.168.1.11") {

@@ -9,7 +9,7 @@ class Application(builder: Builder.() -> Unit) {
 
 
     fun handleRequest(request: Request) : Response? {
-        val host = request.host()
+        val host = request.host
         val router = routers.find { it.host == host }
         return router?.handleRequest(request)
     }

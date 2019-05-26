@@ -5,38 +5,19 @@ import java.lang.StringBuilder
 import java.util.regex.Pattern
 
 
+@Suppress("MemberVisibilityCanBePrivate")
 class Request(
     val method: RequestMethod,
     val path: String,
     val version: String,
     val headers: Headers,
-    val queryString: String?,
+    val query: Query?,
+    val cookies: Cookies?,
     val body: String?
 ) {
-    
-    val cookies = parseCookies()
-    val query = parseQuery()
-    
-    fun contentType() = headers["Content-Type"]
-    fun host() = headers["Host"]
-    
-    private fun parseCookies() : Cookies? {
-        val header = headers["Cookie"] ?: return null
-        val pairs = header.split(Pattern.compile("\\s*;\\s*")).map {
-            val parts = it.split(Pattern.compile("\\s*=\\s*"))
-            Pair(parts[0], parts[1])
-        }.toTypedArray()
-        return hashMapOf(*pairs)
-    }
-    
-    private fun parseQuery() : Query? {
-        if (queryString == null) return null
-        val pairs = queryString.split("&").map {
-            val parts = it.split("=")
-            Pair(parts[0], parts[1])
-        }.toTypedArray()
-        return hashMapOf(*pairs)
-    }
+
+    val host get() = headers["Host"]
+    val contentType get() = headers["Content-Type"]
 
     override fun toString(): String {
         val text = StringBuilder()

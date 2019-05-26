@@ -23,7 +23,7 @@ class RequestExecutor(
         try {
             val request = parser.parseRequest(istream)
             val response = app.handleRequest(request) ?: Response(Status.NotFound)
-            println("${request.method} ${request.path} -> ${response.status.string}\n")
+            println("${request.method} ${request.path} -> ${response.status.string}")
             response.write(ostream)
         } catch (ex: BadRequestException) {
             ex.printStackTrace()
