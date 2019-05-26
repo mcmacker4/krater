@@ -10,7 +10,17 @@ fun main() {
 
             get("/") {
                 contentType("text/html")
-                body = "<h1>Hello World</h1>"
+                val name = it.query?.get("name") ?: "World"
+                body = "<h1>Hello $name</h1>"
+            }
+
+        }
+
+        router("192.168.1.11") {
+
+            get("/") {
+                contentType("text/html")
+                body = "<h1>Hello From the Other Side</h1>"
             }
 
         }

@@ -35,8 +35,11 @@ class RequestParser {
                 reader.read(buffer, 0, contentLength)
                 String(buffer)
             } else null
+            
+            val pathParts = requestLine[1].split("?").toList()
+            val queryString = pathParts.getOrNull(1)
     
-            return Request(method, requestLine[1], requestLine[2], headers, body)
+            return Request(method, pathParts[0], requestLine[2], headers, queryString, body)
             
         } catch(ex: Exception) {
             throw BadRequestException("Error parsing request.", ex)

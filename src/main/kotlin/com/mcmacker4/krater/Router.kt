@@ -3,9 +3,6 @@ package com.mcmacker4.krater
 import com.mcmacker4.krater.server.RequestMethod
 
 
-data class Endpoint(val path: String, val method: RequestMethod, val handler: RequestHandler)
-
-
 class Router(val host: String, block: Builder.() -> Unit) {
 
     val routes = arrayListOf<Endpoint>()
@@ -37,5 +34,7 @@ class Router(val host: String, block: Builder.() -> Unit) {
         }
         
     }
+
+    data class Endpoint(val path: String, val method: RequestMethod, val handler: RequestHandler)
     
 }
